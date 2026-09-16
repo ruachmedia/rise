@@ -94,6 +94,8 @@
 
     h1 span { color: var(--blue-light); }
 
+    .mobile-only { display: none; }
+
     .hero-intro {
       max-width: 590px;
       margin: 26px 0 26px;
@@ -291,9 +293,10 @@
       }
 
       .hero-inner { padding: 24px 0 48px; }
-      .hero-content { padding: 40px 0 24px; }
+      .hero-content { padding: 40px 0 24px; margin-top: 8px; }
       .brand img { width: clamp(110px, 28vw, 150px); }
-      h1 { font-size: clamp(26px, 8vw, 40px); letter-spacing: -.04em; }
+      h1 { font-size: clamp(26px, 8vw, 40px); letter-spacing: -.04em; text-align: center; }
+      .mobile-only { display: inline; }
       .hero-intro { font-size: 13px; line-height: 1.55; margin: 14px 0; }
       .duration { font-size: 11px; padding: 6px 10px; margin-bottom: 10px; }
       .features { grid-template-columns: 1fr; font-size: 12px; gap: 6px 0; margin-bottom: 20px; }
@@ -1465,6 +1468,24 @@
 
     .header-apply:hover { background: var(--blue-light); }
 
+    .menu-toggle {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: transparent;
+      border: none;
+      color: var(--white);
+      cursor: pointer;
+    }
+
+    .menu-toggle svg {
+      width: 26px;
+      height: 26px;
+      fill: currentColor;
+    }
+
     .floating-buttons {
       position: fixed;
       left: 22px;
@@ -1478,6 +1499,24 @@
 
     @media (max-width: 760px) {
       .header-nav { display: none; }
+      .header-nav.open {
+        display: block;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(5,7,11,.98);
+        border-bottom: 1px solid rgba(255,255,255,.1);
+        padding: 12px 24px 18px;
+        backdrop-filter: blur(12px);
+      }
+      .header-nav.open ul { flex-direction: column; gap: 4px; }
+      .header-nav.open a { display: block; padding: 10px 0; }
+      .header-nav.open a::after { display: none; }
+      .header-apply { display: none; }
+      .menu-toggle { display: inline-flex; }
+      .site-header .container { position: relative; }
+      .floating-buttons { left: auto; right: 22px; }
     }
 
     .floating-buttons a,
@@ -1788,6 +1827,9 @@
         </ul>
       </nav>
       <a class="header-apply" href="#apply">Apply Now</a>
+      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" onclick="document.querySelector('.header-nav').classList.toggle('open'); this.setAttribute('aria-expanded', document.querySelector('.header-nav').classList.contains('open'));">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
     </div>
   </header>
 
@@ -1799,7 +1841,7 @@
 
       <section class="hero-content" aria-labelledby="hero-title">
         <p class="eyebrow">RUACH Institute of Sound Engineering</p>
-        <h1 id="hero-title">Become a <span>Professional</span> Live Sound Engineer</h1>
+        <h1 id="hero-title">Become a <span class="mobile-only"><br></span><span>Professional</span> <span class="mobile-only"><br></span>Live Sound <span class="mobile-only"><br></span>Engineer</h1>
         <p class="hero-intro">Master the art of Live Sound Engineering through an intensive practical training program designed for churches, concerts, worship teams, live events, and sound rental businesses.</p>
         <div class="duration">6 Days Intensive Practical Training</div>
         <ul class="features">
@@ -2472,16 +2514,33 @@
       });
     }
 
+    function updateHeroBackground() {
+      const hero = document.querySelector('.hero');
+      if (!hero) return;
+      const w = window.innerWidth;
+      let url = '';
+      if (w <= 760 && hero.dataset.heroMobile) url = hero.dataset.heroMobile;
+      else if (w <= 1100 && hero.dataset.heroTablet) url = hero.dataset.heroTablet;
+      else if (hero.dataset.heroDesktop) url = hero.dataset.heroDesktop;
+      if (url) hero.style.backgroundImage = 'url(' + encodeURI(url) + ')';
+      else hero.style.backgroundImage = '';
+    }
+
+    function setHeroBackground(desktop, tablet, mobile) {
+      const hero = document.querySelector('.hero');
+      if (!hero) return;
+      hero.dataset.heroDesktop = desktop || '';
+      hero.dataset.heroTablet = tablet || '';
+      hero.dataset.heroMobile = mobile || '';
+      updateHeroBackground();
+    }
+
     function applyContent(data) {
       if (!data) return;
       if (data.heroLogo) {
         document.querySelectorAll('[data-fb-key="heroLogo"]').forEach(img => img.src = data.heroLogo);
       }
-      if (data.heroBackground) {
-        document.querySelectorAll('.hero').forEach(el => {
-          el.style.backgroundImage = 'url(' + encodeURI(data.heroBackground) + ')';
-        });
-      }
+      setHeroBackground(data.heroBackgroundDesktop, data.heroBackgroundTablet, data.heroBackgroundMobile);
       if (data.aboutImage) {
         document.querySelectorAll('[data-fb-key="aboutImage"]').forEach(img => img.src = data.aboutImage);
       }
@@ -2531,6 +2590,7 @@
     }
 
     contentRef.on('value', function(snapshot) { applyContent(snapshot.val()); });
+    window.addEventListener('resize', updateHeroBackground);
   </script>
 
 </body>
