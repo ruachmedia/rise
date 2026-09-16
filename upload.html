@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RUACH Website Content Editor</title>
+  <style>
+    :root {
+      --black: #05070b;
+      --section-black: #090e16;
+      --blue: #168cff;
+      --blue-light: #43a7ff;
+      --white: #f5f7ff;
+      --muted: #9fb0c8;
+      --green: #25d366;
+      --red: #ff7b8f;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--black);
+      color: var(--white);
+      font-family: Inter, Arial, sans-serif;
+      line-height: 1.6;
+    }
+    .container {
+      width: min(1100px, calc(100% - 48px));
+      margin: auto;
+      padding: 40px 0 80px;
+    }
+    .topbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .topbar h1 { margin: 0; font-size: clamp(26px, 4vw, 38px); letter-spacing: -.03em; }
+    .topbar p { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn {
+      padding: 10px 18px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 700;
+      transition: transform .15s ease, filter .15s ease;
+    }
+    .btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
+    .btn-publish { background: linear-gradient(135deg, var(--blue), var(--blue-light)); color: #fff; }
+    .btn-reload { background: rgba(255,255,255,.1); color: var(--white); border: 1px solid rgba(255,255,255,.15); }
+    .status-bar {
+      padding: 12px 18px;
+      border-radius: 10px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 24px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+    .status-bar.ok { color: var(--blue-light); border-color: rgba(22,140,255,.25); background: rgba(22,140,255,.08); }
+    .status-bar.error { color: var(--red); border-color: rgba(255,123,143,.25); background: rgba(255,123,143,.08); }
+    .section-grid { display: grid; gap: 20px; }
+    .card {
+      background: var(--section-black);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 16px;
+      padding: 24px;
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+    h2 { margin: 0; font-size: 18px; color: var(--blue-light); }
+    .count { font-size: 12px; color: var(--muted); background: rgba(255,255,255,.08); padding: 4px 10px; border-radius: 20px; }
+    label { display: block; margin: 14px 0 6px; font-size: 13px; font-weight: 600; color: var(--muted); }
+    input[type="url"], input[type="text"], textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,.15);
+      background: rgba(255,255,255,.05);
+      color: var(--white);
+      font-size: 14px;
+    }
+    input:focus, textarea:focus { outline: none; border-color: var(--blue); }
+    textarea { min-height: 80px; resize: vertical; }
+    .item-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+    .item { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1); border-radius: 12px; padding: 12px; display: flex; gap: 12px; align-items: center; }
+    .item-fields { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+    .item-fields.row { flex-direction: row; flex-wrap: wrap; gap: 10px; }
+    .item-fields.row input { flex: 1; min-width: 180px; }
+    .preview {
+      width: 56px;
+      height: 56px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #111923;
+      border: 1px solid rgba(255,255,255,.12);
+      flex-shrink: 0;
+    }
+    .btn-add { background: rgba(22,140,255,.12); color: var(--blue-light); border: 1px solid rgba(22,140,255,.25); padding: 8px 14px; border-radius: 6px; font-weight: 700; }
+    .btn-remove { background: rgba(220,39,67,.12); color: var(--red); border: 1px solid rgba(220,39,67,.25); padding: 8px 12px; border-radius: 6px; font-weight: 700; }
+    .empty { color: var(--muted); font-size: 13px; padding: 10px 0; }
+    .field-row { margin-bottom: 14px; }
+    .loading { color: var(--muted); padding: 10px 0; }
+    @media (max-width: 760px) {
+      .topbar { flex-direction: column; align-items: flex-start; }
+      .item-fields.row { flex-direction: column; }
+      .item { align-items: flex-start; flex-direction: column; }
+      .preview { width: 100%; height: 120px; }
+    }
+  </style>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="topbar">
+      <div>
+        <h1>RUACH Content Manager</h1>
+        <p>Edit, save, or delete content. The main website updates automatically.</p>
+      </div>
+      <div class="actions">
+        <button class="btn btn-reload" onclick="reload()">Reload Data</button>
+        <button class="btn btn-reload" onclick="renderData(defaultData); setStatus('Restored website defaults. Click Save & Publish to store.', 'ok');">Load Defaults</button>
+        <button class="btn btn-publish" onclick="publish()">Save &amp; Publish</button>
+      </div>
+    </div>
+
+    <div id="status" class="status-bar">Loading current content...</div>
+
+    <div class="section-grid">
+      <div class="card">
+        <div class="card-header"><h2>Hero</h2></div>
+        <div class="field-row"><label>Logo URL</label><input type="url" id="heroLogo" placeholder="https://.../logo.png"></div>
+        <div class="field-row"><label>Hero Background URL</label><input type="url" id="heroBackground" placeholder="https://.../hero.png"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><h2>About Section</h2></div>
+        <div class="field-row"><label>About Image URL</label><input type="url" id="aboutImage" placeholder="https://..."></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><h2>Why Choose Us</h2></div>
+        <div class="field-row"><label>Why Photo URL</label><input type="url" id="whyPhoto" placeholder="https://..."></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><h2>Course Module Images</h2><span class="count" id="courseCount">0 items</span></div>
+        <div id="courseImages" class="item-list"><div class="loading">Loading...</div></div>
+        <button class="btn btn-add" onclick="addImageItem('courseImages')">+ Add Course Image</button>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><h2>Gallery Photos</h2><span class="count" id="galleryCount">0 items</span></div>
+        <div id="galleryImages" class="item-list"><div class="loading">Loading...</div></div>
+        <button class="btn btn-add" onclick="addImageItem('galleryImages')">+ Add Gallery Photo</button>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><h2>Instagram Reels</h2><span class="count" id="reelsCount">0 items</span></div>
+        <div id="reels" class="item-list"><div class="loading">Loading...</div></div>
+        <button class="btn btn-add" onclick="addReelItem()">+ Add Reel URL</button>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><h2>Training Videos</h2><span class="count" id="videosCount">0 items</span></div>
+        <div id="videos" class="item-list"><div class="loading">Loading...</div></div>
+        <button class="btn btn-add" onclick="addVideoItem()">+ Add Video</button>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><h2>Testimonials</h2><span class="count" id="testimonialsCount">0 items</span></div>
+        <div id="testimonials" class="item-list"><div class="loading">Loading...</div></div>
+        <button class="btn btn-add" onclick="addTestimonialItem()">+ Add Testimonial</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCWDx1Sj-S2liB2eI5h6pi4JwCxUokRDpw",
+      authDomain: "newreservation-f307f.firebaseapp.com",
+      databaseURL: "https://newreservation-f307f-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "newreservation-f307f",
+      storageBucket: "newreservation-f307f.firebasestorage.app",
+      messagingSenderId: "62177167686",
+      appId: "1:62177167686:web:db2b353710dab365e3bd47",
+      measurementId: "G-7DV9CVE3TM"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const contentRef = firebase.database().ref('rise/content');
+
+    const defaultData = {
+      heroLogo: 'https://ruachmedia.github.io/rise/logo.png',
+      heroBackground: 'https://ruachmedia.github.io/rise/hero.png',
+      aboutImage: 'https://images.unsplash.com/photo-1598387993281-cecf8b71a8f8?auto=format&fit=crop&w=1200&q=85',
+      whyPhoto: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1600&q=85',
+      courseImages: [
+        'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1590602847861-f357a933cd1e?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1514320291840-2e0a9bf5a094?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1525253604620-23ac591dbea0?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&w=800&q=80'
+      ],
+      gallery: [
+        'https://images.unsplash.com/photo-1598387993281-cecf8b71a8f8?auto=format&fit=crop&w=600&q=80',
+        'https://images.unsplash.com/photo-1514320291840-2e0a9bf5a094?auto=format&fit=crop&w=600&q=80',
+        'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80',
+        'https://images.unsplash.com/photo-1525253604620-23ac591dbea0?auto=format&fit=crop&w=600&q=80',
+        'https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=600&q=80',
+        'https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&w=600&q=80',
+        'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=600&q=80',
+        'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80'
+      ],
+      reels: [
+        'https://www.instagram.com/reel/Db3BVkjTvhx/',
+        'https://www.instagram.com/reel/DaxgvjWzFSg/',
+        'https://www.instagram.com/reel/Db7H9QrTzJQ/',
+        'https://www.instagram.com/reel/DdRXuoiT0jy/'
+      ],
+      videos: [
+        { url: 'https://www.youtube.com/embed/M7lc1UVf-VE', caption: 'Live mixing basics — how to build a clean monitor mix.' },
+        { url: 'https://www.youtube.com/embed/9bZkp7q19f0', caption: 'Setting up the console and stage patch for a live event.' },
+        { url: 'https://www.youtube.com/embed/dQw4w9WgXcQ', caption: 'System tuning and amplifier configuration walkthrough.' }
+      ],
+      testimonials: [
+        { quote: 'I came in with zero audio knowledge. After the 6-day training, I was confidently running the church sound console and helping the worship team every Sunday.', name: 'Arun Kumar', role: 'Church Sound Volunteer — Hyderabad' },
+        { quote: 'The practical sessions were the best part. I got to set up the console, configure DSP and actually mix for a live event before the course ended.', name: 'Rahul S.', role: 'Event Technician — Bangalore' },
+        { quote: 'As a sound rental owner, this course helped me train my team faster. The system tuning and amplifier modules alone saved me hours on every setup.', name: 'Michael Joseph', role: 'Rental Business Owner — Secunderabad' }
+      ]
+    };
+
+    function escapeHtml(str) {
+      return String(str).replace(/[&<>"']/g, function(m) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
+      });
+    }
+
+    function setStatus(text, type) {
+      const el = document.getElementById('status');
+      el.textContent = text;
+      el.className = 'status-bar ' + (type || '');
+    }
+
+    function emptyMessage(containerId) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '<div class="empty">No items yet. Click Add to create one.</div>';
+    }
+
+    function addImageItem(containerId, value) {
+      const container = document.getElementById(containerId);
+      const existingEmpty = container.querySelector('.empty');
+      if (existingEmpty) existingEmpty.remove();
+      const v = value || '';
+      const div = document.createElement('div');
+      div.className = 'item';
+      div.innerHTML = '<img class="preview" src="' + escapeHtml(v) + '" onerror="this.style.opacity=0" alt="">' +
+                      '<div class="item-fields">' +
+                        '<input type="url" class="url-input" placeholder="https://..." value="' + escapeHtml(v) + '">' +
+                      '</div>' +
+                      '<button class="btn btn-remove" onclick="this.closest(\'.item\').remove(); updateCount(\'' + containerId + '\')">Remove</button>';
+      container.appendChild(div);
+      div.querySelector('.url-input').addEventListener('input', function(e) {
+        div.querySelector('.preview').src = e.target.value;
+      });
+      updateCount(containerId);
+    }
+
+    function addReelItem(value) {
+      const container = document.getElementById('reels');
+      if (container.querySelector('.empty')) container.innerHTML = '';
+      const v = value || '';
+      const div = document.createElement('div');
+      div.className = 'item';
+      div.innerHTML = '<div class="item-fields"><input type="url" class="url-input" placeholder="https://www.instagram.com/reel/..." value="' + escapeHtml(v) + '"></div>' +
+                      '<button class="btn btn-remove" onclick="this.closest(\'.item\').remove(); updateCount(\'reels\')">Remove</button>';
+      container.appendChild(div);
+      updateCount('reels');
+    }
+
+    function addVideoItem(video) {
+      const container = document.getElementById('videos');
+      if (container.querySelector('.empty')) container.innerHTML = '';
+      const v = video || {};
+      const div = document.createElement('div');
+      div.className = 'item';
+      div.innerHTML = '<div class="item-fields row">' +
+                        '<input type="url" class="url-input" placeholder="YouTube embed URL" value="' + escapeHtml(v.url || '') + '">' +
+                        '<input type="text" class="caption-input" placeholder="Caption" value="' + escapeHtml(v.caption || '') + '">' +
+                      '</div>' +
+                      '<button class="btn btn-remove" onclick="this.closest(\'.item\').remove(); updateCount(\'videos\')">Remove</button>';
+      container.appendChild(div);
+      updateCount('videos');
+    }
+
+    function addTestimonialItem(t) {
+      const container = document.getElementById('testimonials');
+      if (container.querySelector('.empty')) container.innerHTML = '';
+      const item = t || {};
+      const div = document.createElement('div');
+      div.className = 'item';
+      div.innerHTML = '<div class="item-fields">' +
+                        '<textarea class="quote-input" placeholder="Quote">' + escapeHtml(item.quote || '') + '</textarea>' +
+                        '<div class="item-fields row">' +
+                          '<input type="text" class="name-input" placeholder="Name" value="' + escapeHtml(item.name || '') + '">' +
+                          '<input type="text" class="role-input" placeholder="Short description" value="' + escapeHtml(item.role || '') + '">' +
+                        '</div>' +
+                      '</div>' +
+                      '<button class="btn btn-remove" onclick="this.closest(\'.item\').remove(); updateCount(\'testimonials\')">Remove</button>';
+      container.appendChild(div);
+      updateCount('testimonials');
+    }
+
+    function updateCount(containerId) {
+      const countEl = document.getElementById(containerId + 'Count');
+      if (!countEl) return;
+      const items = document.querySelectorAll('#' + containerId + ' .item');
+      countEl.textContent = items.length + (items.length === 1 ? ' item' : ' items');
+      const container = document.getElementById(containerId);
+      if (items.length === 0 && !container.querySelector('.empty')) {
+        container.innerHTML = '<div class="empty">No items yet. Click Add to create one.</div>';
+      }
+    }
+
+    function getImageValues(containerId) {
+      return Array.from(document.querySelectorAll('#' + containerId + ' .item .url-input'))
+                  .map(i => i.value.trim()).filter(v => v);
+    }
+
+    function renderData(data) {
+      document.getElementById('heroLogo').value = data.heroLogo || '';
+      document.getElementById('heroBackground').value = data.heroBackground || '';
+      document.getElementById('aboutImage').value = data.aboutImage || '';
+      document.getElementById('whyPhoto').value = data.whyPhoto || '';
+
+      ['courseImages','galleryImages','reels'].forEach(id => {
+        const container = document.getElementById(id);
+        container.innerHTML = '';
+        const key = id === 'galleryImages' ? 'gallery' : id;
+        (data[key] || []).forEach(v => {
+          if (id === 'reels') addReelItem(v);
+          else addImageItem(id, v);
+        });
+        if ((data[key] || []).length === 0) emptyMessage(id);
+        updateCount(id);
+      });
+
+      document.getElementById('videos').innerHTML = '';
+      (data.videos || []).forEach(v => addVideoItem(v));
+      if ((data.videos || []).length === 0) emptyMessage('videos');
+      updateCount('videos');
+
+      document.getElementById('testimonials').innerHTML = '';
+      (data.testimonials || []).forEach(t => addTestimonialItem(t));
+      if ((data.testimonials || []).length === 0) emptyMessage('testimonials');
+      updateCount('testimonials');
+    }
+
+    function loadContent() {
+      setStatus('Loading current content...');
+      contentRef.once('value').then(function(snapshot) {
+        let data = snapshot.val() || {};
+        const fromDefaults = Object.keys(data).length === 0;
+        if (fromDefaults) {
+          data = defaultData;
+        }
+        renderData(data);
+        if (fromDefaults) {
+          setStatus('Loaded the current website defaults (not saved to Firebase yet). You can edit them and click Save & Publish to store.', 'ok');
+        } else {
+          setStatus('Content loaded from Firebase. Make changes and click Save & Publish.', 'ok');
+        }
+      }).catch(function(e) {
+        setStatus('Failed to load content: ' + e.message, 'error');
+      });
+    }
+
+    function reload() { loadContent(); }
+
+    function publish() {
+      setStatus('Saving & publishing...');
+      const payload = {
+        heroLogo: document.getElementById('heroLogo').value.trim(),
+        heroBackground: document.getElementById('heroBackground').value.trim(),
+        aboutImage: document.getElementById('aboutImage').value.trim(),
+        whyPhoto: document.getElementById('whyPhoto').value.trim(),
+        courseImages: getImageValues('courseImages'),
+        gallery: getImageValues('galleryImages'),
+        reels: getImageValues('reels'),
+        videos: Array.from(document.querySelectorAll('#videos .item')).map(el => ({
+          url: el.querySelector('.url-input').value.trim(),
+          caption: el.querySelector('.caption-input').value.trim()
+        })).filter(v => v.url),
+        testimonials: Array.from(document.querySelectorAll('#testimonials .item')).map(el => ({
+          quote: el.querySelector('.quote-input').value.trim(),
+          name: el.querySelector('.name-input').value.trim(),
+          role: el.querySelector('.role-input').value.trim()
+        })).filter(t => t.quote)
+      };
+
+      contentRef.set(payload).then(function() {
+        setStatus('Saved and published. index.html will auto-update.', 'ok');
+      }).catch(function(e) {
+        setStatus('Failed to publish: ' + e.message, 'error');
+      });
+    }
+
+    loadContent();
+  </script>
+</body>
+</html>
