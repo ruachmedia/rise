@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=5">
   <title>RUACH Institute of Sound Engineering</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -137,7 +137,39 @@
     .actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .hero-instagram {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 28px;
+    }
+
+    .hero-instagram a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+      color: #fff;
+      text-decoration: none;
+      transition: transform .2s ease, box-shadow .2s ease;
+      box-shadow: 0 8px 24px rgba(220,39,67,.25);
+    }
+
+    .hero-instagram a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(220,39,67,.35);
+    }
+
+    .hero-instagram svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
     }
 
     .button {
@@ -245,8 +277,9 @@
 
     @media (max-width: 760px) {
       .hero {
-        background-position: 68% center;
-        background-attachment: scroll;
+        background-position: 75% center;
+        background-attachment: fixed;
+        background-size: cover;
       }
 
       .hero::before {
@@ -257,9 +290,15 @@
         width: min(100% - 36px, 560px);
       }
 
-      .hero-content { padding-top: 80px; }
-
-      .features { grid-template-columns: 1fr; }
+      .hero-inner { padding: 24px 0 48px; }
+      .hero-content { padding: 40px 0 24px; }
+      .brand img { width: clamp(110px, 28vw, 150px); }
+      h1 { font-size: clamp(26px, 8vw, 40px); letter-spacing: -.04em; }
+      .hero-intro { font-size: 13px; line-height: 1.55; margin: 14px 0; }
+      .duration { font-size: 11px; padding: 6px 10px; margin-bottom: 10px; }
+      .features { grid-template-columns: 1fr; font-size: 12px; gap: 6px 0; margin-bottom: 20px; }
+      .actions { gap: 8px; margin-top: 20px; }
+      .actions .button { padding: 8px 14px; font-size: 12px; }
 
       .about-section { padding: 76px 0; }
 
@@ -614,47 +653,7 @@
       }
     }
 
-    .scroll-top {
-      position: fixed;
-      right: 22px;
-      bottom: 22px;
-      z-index: 99;
-      width: 48px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      background: var(--blue);
-      color: #fff;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 6px 24px rgba(22,140,255,.35);
-      opacity: 0;
-      transform: translateY(20px);
-      pointer-events: none;
-      transition: opacity .3s ease, transform .3s ease, background .2s ease;
-    }
-
-    .scroll-top.visible {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
-    }
-
-    .scroll-top:hover {
-      background: var(--blue-light);
-    }
-
-    .scroll-top svg {
-      width: 22px;
-      height: 22px;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 2.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
+    html { scroll-behavior: smooth; }
 
     .testimonials-section {
       background: var(--section-black);
@@ -792,15 +791,131 @@
       background: var(--blue-light);
     }
 
-    .play-button svg {
-      width: 22px;
-      height: 22px;
-      fill: currentColor;
-      margin-left: 3px;
+    .testimonial-role {
+      font-size: 13px;
+      color: var(--muted);
     }
 
-    @media (max-width: 980px) {
+    .reels-section {
+      background: var(--section-black);
+      padding: 112px 0;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+
+    .reels-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    .reels-header h2 {
+      margin: 0 0 16px;
+      font-size: clamp(34px, 4.3vw, 56px);
+      letter-spacing: -.055em;
+    }
+
+    .reels-header h2 span { color: var(--blue-light); }
+
+    .reels-header p {
+      max-width: 620px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .featured-story {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 48px;
+    }
+
+    .story-phone {
+      position: relative;
+      max-width: 420px;
+      width: 100%;
+    }
+
+    .story-video {
+      width: 100%;
+      height: min(80vh, 740px);
+      object-fit: cover;
+      border-radius: 24px;
+      background: #111923;
+      cursor: pointer;
+      box-shadow: 0 24px 60px rgba(0,0,0,.45);
+    }
+
+    .story-caption {
+      text-align: center;
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .story-hint {
+      position: absolute;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,.6);
+      color: #fff;
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      pointer-events: none;
+    }
+
+    .story-views {
+      position: absolute;
+      bottom: 48px;
+      left: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0,0,0,.45);
+      color: #fff;
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      pointer-events: none;
+    }
+
+    .story-views svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .reels-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      align-items: start;
+    }
+
+    .reel-embed {
+      min-width: 0;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .reel-embed blockquote.instagram-media {
+      margin: 0 !important;
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+
+    .reel-embed iframe {
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+
+    @media (max-width: 1100px) {
+      .reels-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 560px) {
       .testimonials-grid { grid-template-columns: 1fr; }
+      .reels-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 760px) {
@@ -1357,7 +1472,8 @@
       z-index: 99;
       display: flex;
       flex-direction: column-reverse;
-      gap: 12px;
+      gap: 14px;
+      perspective: 800px;
     }
 
     @media (max-width: 760px) {
@@ -1366,37 +1482,71 @@
 
     .floating-buttons a,
     .floating-buttons button {
-      width: 48px;
-      height: 48px;
+      width: 50px;
+      height: 50px;
       display: flex;
       align-items: center;
       justify-content: center;
       border-radius: 50%;
       border: none;
       cursor: pointer;
-      box-shadow: 0 6px 24px rgba(0,0,0,.35);
-      transition: transform .2s ease, opacity .3s ease;
+      color: #fff;
+      box-shadow: 0 8px 28px rgba(0,0,0,.4);
+      transition: transform .25s ease, box-shadow .25s ease, background .4s ease;
+      animation: float3d 3s ease-in-out infinite;
+    }
+
+    .floating-buttons a:nth-child(1),
+    .floating-buttons button:nth-child(1) { animation-delay: 0s; }
+    .floating-buttons a:nth-child(2),
+    .floating-buttons button:nth-child(2) { animation-delay: .5s; }
+    .floating-buttons a:nth-child(3),
+    .floating-buttons button:nth-child(3) { animation-delay: 1s; }
+
+    @keyframes float3d {
+      0%, 100% { transform: translateY(0) rotateY(0deg) rotateX(0deg); }
+      50% { transform: translateY(-6px) rotateY(6deg) rotateX(4deg); }
     }
 
     .floating-buttons a:hover,
     .floating-buttons button:hover {
-      transform: scale(1.08);
+      transform: perspective(600px) rotateY(-16deg) rotateX(10deg) scale(1.15) translateZ(20px);
+      box-shadow: 0 16px 40px rgba(0,0,0,.45);
+      filter: brightness(1.15);
     }
 
-    .whatsapp-float {
-      background: #25d366;
-      color: #fff;
-    }
-
-    .whatsapp-float svg {
+    .floating-buttons svg {
       width: 26px;
       height: 26px;
       fill: currentColor;
     }
 
+    .whatsapp-float {
+      background: #25d366;
+    }
+
+    .whatsapp-float:hover {
+      background: linear-gradient(135deg, #25d366, #128c7e);
+    }
+
+    .instagram-float {
+      background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+      background-size: 200% 200%;
+      animation: float3d 3s ease-in-out infinite, gradientShift 3s ease infinite;
+    }
+
+    .instagram-float:hover {
+      animation: gradientShift .8s ease infinite, float3d 3s ease-in-out infinite;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
     .scroll-top {
       background: var(--blue);
-      color: #fff;
       opacity: 0;
       transform: translateY(20px);
       pointer-events: none;
@@ -1644,7 +1794,7 @@
   <main class="hero" id="top">
     <div class="hero-inner">
       <a class="brand" href="#top" aria-label="RUACH Institute of Sound Engineering">
-        <img src="https://ruachmedia.github.io/rise/logo.png" alt="RUACH Institute of Sound Engineering logo">
+        <img src="https://ruachmedia.github.io/rise/logo.png" alt="RUACH Institute of Sound Engineering logo" data-fb-key="heroLogo">
       </a>
 
       <section class="hero-content" aria-labelledby="hero-title">
@@ -1664,6 +1814,7 @@
           <a class="button primary" href="#apply">Apply Now</a>
           <a class="button secondary" href="https://wa.me/" target="_blank" rel="noopener">WhatsApp Us</a>
         </div>
+
       </section>
     </div>
   </main>
@@ -1707,7 +1858,7 @@
     <div class="container">
       <div class="about-grid">
         <div class="about-photo">
-          <img src="https://images.unsplash.com/photo-1598387993281-cecf8b71a8f8?auto=format&fit=crop&w=1200&q=85" loading="lazy" decoding="async" alt="Audio engineer working with professional sound equipment">
+          <img src="https://images.unsplash.com/photo-1598387993281-cecf8b71a8f8?auto=format&fit=crop&w=1200&q=85" loading="lazy" decoding="async" alt="Audio engineer working with professional sound equipment" data-fb-key="aboutImage">
         </div>
 
         <div class="about-copy">
@@ -1758,7 +1909,7 @@
       </div>
 
       <div class="why-photo">
-        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1600&q=85" alt="Professional studio headphones and audio equipment">
+        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1600&q=85" alt="Professional studio headphones and audio equipment" data-fb-key="whyPhoto">
       </div>
     </div>
   </section>
@@ -1990,7 +2141,7 @@
         <p>Photos and reels from our live sound training sessions. Replace these with your own images and videos later.</p>
       </div>
 
-      <div class="gallery-grid">
+      <div class="gallery-grid" id="gallery-grid">
         <div class="gallery-photo"><img src="https://images.unsplash.com/photo-1598387993281-cecf8b71a8f8?auto=format&fit=crop&w=600&q=80" loading="lazy" decoding="async" alt="Sound training gallery photo"></div>
         <div class="gallery-photo"><img src="https://images.unsplash.com/photo-1514320291840-2e0a9bf5a094?auto=format&fit=crop&w=600&q=80" loading="lazy" decoding="async" alt="Mixing console gallery photo"></div>
         <div class="gallery-photo"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80" loading="lazy" decoding="async" alt="Studio headphones gallery photo"></div>
@@ -2006,7 +2157,7 @@
         <p>Short clips and highlights from classes and live setups.</p>
       </div>
 
-      <div class="videos-grid">
+      <div class="videos-grid" id="videos-grid">
         <div class="video-card">
           <iframe src="https://www.youtube.com/embed/M7lc1UVf-VE" title="Training reel 1" allowfullscreen></iframe>
           <p class="video-caption">Live mixing basics — how to build a clean monitor mix.</p>
@@ -2031,21 +2182,15 @@
         <p>Hear directly from our students who have transformed their knowledge and confidence through practical training at RUACH Institute of Sound Engineering.</p>
       </div>
 
-      <div class="testimonials-grid">
+      <div class="testimonials-grid" id="testimonials-grid">
         <article class="testimonial-card">
           <p class="testimonial-quote">I came in with zero audio knowledge. After the 6-day training, I was confidently running the church sound console and helping the worship team every Sunday.</p>
           <div class="testimonial-author">
             <div class="testimonial-avatar">AK</div>
             <div>
               <div class="testimonial-name">Arun Kumar</div>
-              <div class="testimonial-role">Church Sound Volunteer</div>
+              <div class="testimonial-role">Church Sound Volunteer — Hyderabad</div>
             </div>
-          </div>
-          <div class="testimonial-video">
-            <img src="https://images.unsplash.com/photo-1511376777868-611b54f68947?auto=format&fit=crop&w=800&q=80" loading="lazy" decoding="async" alt="Student testimonial thumbnail">
-            <button class="play-button" aria-label="Play testimonial video">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            </button>
           </div>
         </article>
 
@@ -2055,14 +2200,8 @@
             <div class="testimonial-avatar">RS</div>
             <div>
               <div class="testimonial-name">Rahul S.</div>
-              <div class="testimonial-role">Event Technician</div>
+              <div class="testimonial-role">Event Technician — Bangalore</div>
             </div>
-          </div>
-          <div class="testimonial-video">
-            <img src="https://images.unsplash.com/photo-1598387993441-a364f8541f7a?auto=format&fit=crop&w=800&q=80" loading="lazy" decoding="async" alt="Student testimonial thumbnail">
-            <button class="play-button" aria-label="Play testimonial video">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            </button>
           </div>
         </article>
 
@@ -2072,16 +2211,37 @@
             <div class="testimonial-avatar">MJ</div>
             <div>
               <div class="testimonial-name">Michael Joseph</div>
-              <div class="testimonial-role">Rental Business Owner</div>
+              <div class="testimonial-role">Rental Business Owner — Secunderabad</div>
             </div>
           </div>
-          <div class="testimonial-video">
-            <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80" loading="lazy" decoding="async" alt="Student testimonial thumbnail">
-            <button class="play-button" aria-label="Play testimonial video">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            </button>
-          </div>
         </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="reels-section" id="reels" aria-labelledby="reels-title">
+    <div class="container">
+      <div class="reels-header">
+        <p class="section-label">Instagram Reels</p>
+        <h2 id="reels-title">Watch Our <span>Student Stories</span></h2>
+        <p>Click to play the latest reels from our training sessions.</p>
+      </div>
+
+      <div id="featured-story" class="featured-story"></div>
+
+      <div class="reels-grid" id="reels-grid">
+        <div class="reel-embed">
+          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/Db3BVkjTvhx/" data-instgrm-version="14"></blockquote>
+        </div>
+        <div class="reel-embed">
+          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DaxgvjWzFSg/" data-instgrm-version="14"></blockquote>
+        </div>
+        <div class="reel-embed">
+          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/Db7H9QrTzJQ/" data-instgrm-version="14"></blockquote>
+        </div>
+        <div class="reel-embed">
+          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DdRXuoiT0jy/" data-instgrm-version="14"></blockquote>
+        </div>
       </div>
     </div>
   </section>
@@ -2209,6 +2369,9 @@
     <button class="scroll-top" id="scrollTop" aria-label="Scroll to top" title="Scroll to top">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
     </button>
+    <a class="instagram-float" href="https://www.instagram.com/rise.soundengineering?stkn=MWd4ZDVwNHQ4MzlreA==" target="_blank" rel="noopener" aria-label="Follow us on Instagram" title="Follow us on Instagram">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.05.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.05.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.05-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.05-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.78.3-1.44.71-2.1 1.37C1.38 2.66.97 3.32.67 4.1.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.3.78.71 1.44 1.37 2.1.66.66 1.32 1.07 2.1 1.37.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56.78-.3 1.44-.71 2.1-1.37.66-.66 1.07-1.32 1.37-2.1.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91-.3-.78-.71-1.44-1.37-2.1C21.34 1.38 20.68.97 19.9.67c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 100 12.32 6.16 6.16 0 000-12.32zM12 16a4 4 0 110-8 4 4 0 010 8zm7.85-10.4a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0z"/></svg>
+    </a>
     <a class="whatsapp-float" href="https://wa.me/919642557796" target="_blank" rel="noopener" aria-label="Contact on WhatsApp" title="Contact on WhatsApp">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 14.3c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.2-.7.9-.9 1.1-.2.2-.3.3-.6.1-.3-.1-1.2-.5-2.3-1.6-.9-.8-1.5-1.8-1.6-2.1-.1-.3 0-.4.1-.5.1-.1.3-.3.4-.4.1-.1.2-.2.3-.4.1-.2 0-.3 0-.4 0-.1-.7-1.7-1-2.4-.3-.7-.6-.5-.8-.5-.2 0-.4 0-.6.1-.2.1-1 .4-1.5.7-.5.4-1 .8-1.2 1.2-.2.4-.4 1-.2 1.9.2.9.6 1.8 1.1 2.6.5.7 1.3 1.6 2.2 2.3 1.2 1 2.4 1.5 3.1 1.7.7.2 1.2.2 1.6.1.4-.1 1-.4 1.5-.9.4-.4.7-.9.8-1.2.1-.3.1-.6 0-.7-.1-.2-.3-.3-.6-.4zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.2-1.2C8.5 21.4 10.2 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
     </a>
@@ -2225,7 +2388,7 @@
         });
       }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
 
-      document.querySelectorAll('section, .about-grid, .why-card, .course-card').forEach(function (el) {
+      document.querySelectorAll('section, .about-grid, .why-card, .course-card, .testimonial-card, .reel-embed, .faq-item, .batch-card, .contact-card, .footer').forEach(function (el) {
         el.classList.add('reveal');
         observer.observe(el);
       });
@@ -2285,6 +2448,90 @@
     });
   </script>
 
+  <script async src="//www.instagram.com/embed.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCWDx1Sj-S2liB2eI5h6pi4JwCxUokRDpw",
+      authDomain: "newreservation-f307f.firebaseapp.com",
+      databaseURL: "https://newreservation-f307f-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "newreservation-f307f",
+      storageBucket: "newreservation-f307f.firebasestorage.app",
+      messagingSenderId: "62177167686",
+      appId: "1:62177167686:web:db2b353710dab365e3bd47",
+      measurementId: "G-7DV9CVE3TM"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const contentRef = firebase.database().ref('rise/content');
+
+    function escapeHtml(str) {
+      return String(str).replace(/[&<>"']/g, function(m) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
+      });
+    }
+
+    function applyContent(data) {
+      if (!data) return;
+      if (data.heroLogo) {
+        document.querySelectorAll('[data-fb-key="heroLogo"]').forEach(img => img.src = data.heroLogo);
+      }
+      if (data.heroBackground) {
+        document.querySelectorAll('.hero').forEach(el => {
+          el.style.backgroundImage = 'url(' + encodeURI(data.heroBackground) + ')';
+        });
+      }
+      if (data.aboutImage) {
+        document.querySelectorAll('[data-fb-key="aboutImage"]').forEach(img => img.src = data.aboutImage);
+      }
+      if (data.whyPhoto) {
+        document.querySelectorAll('[data-fb-key="whyPhoto"]').forEach(img => img.src = data.whyPhoto);
+      }
+      if (Array.isArray(data.courseImages)) {
+        document.querySelectorAll('.course-img img').forEach((img, i) => {
+          if (data.courseImages[i]) img.src = data.courseImages[i];
+        });
+      }
+      if (Array.isArray(data.gallery) && data.gallery.length) {
+        const galleryGrid = document.getElementById('gallery-grid');
+        if (galleryGrid) galleryGrid.innerHTML = data.gallery.map(url => '<div class="gallery-photo"><img src="' + url + '" loading="lazy" decoding="async" alt="Gallery photo"></div>').join('');
+      }
+      if (Array.isArray(data.videos) && data.videos.length) {
+        const videosGrid = document.getElementById('videos-grid');
+        if (videosGrid) videosGrid.innerHTML = data.videos.map(v => '<div class="video-card"><iframe src="' + v.url + '" title="Training reel" allowfullscreen></iframe><p class="video-caption">' + (v.caption || '') + '</p></div>').join('');
+      }
+      if (Array.isArray(data.reels) && data.reels.length) {
+        const reelsGrid = document.getElementById('reels-grid');
+        if (reelsGrid) {
+          reelsGrid.innerHTML = data.reels.map(url => '<div class="reel-embed"><blockquote class="instagram-media" data-instgrm-permalink="' + url + '" data-instgrm-version="14"></blockquote></div>').join('');
+          if (window.instgrm && window.instgrm.Embeds) window.instgrm.Embeds.process();
+        }
+      }
+      if (data.featuredStory && data.featuredStory.mp4) {
+        const featured = document.getElementById('featured-story');
+        if (featured) {
+          const poster = data.featuredStory.poster ? ' poster="' + encodeURI(data.featuredStory.poster) + '"' : '';
+          const views = data.featuredStory.views ? '<div class="story-views"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> ' + escapeHtml(data.featuredStory.views) + '</div>' : '';
+          featured.innerHTML = '<div class="story-phone"><video class="story-video" src="' + encodeURI(data.featuredStory.mp4) + '"' + poster + ' autoplay muted playsinline loop onclick="if(this.requestFullscreen){this.requestFullscreen();}else if(this.webkitEnterFullscreen){this.webkitEnterFullscreen();}"></video><p class="story-caption">' + escapeHtml(data.featuredStory.caption || '') + '</p>' + views + '<div class="story-hint">Tap video for full screen</div></div>';
+        }
+      } else {
+        const featured = document.getElementById('featured-story');
+        if (featured) featured.innerHTML = '';
+      }
+      if (Array.isArray(data.testimonials) && data.testimonials.length) {
+        const grid = document.getElementById('testimonials-grid');
+        if (grid) {
+          grid.innerHTML = data.testimonials.map(t => {
+            const initials = (t.name || '').split(' ').map(n => n[0] || '').join('').substring(0, 2).toUpperCase();
+            return '<article class="testimonial-card"><p class="testimonial-quote">' + (t.quote || '') + '</p><div class="testimonial-author"><div class="testimonial-avatar">' + initials + '</div><div><div class="testimonial-name">' + (t.name || '') + '</div><div class="testimonial-role">' + (t.role || '') + '</div></div></div></article>';
+          }).join('');
+        }
+      }
+    }
+
+    contentRef.on('value', function(snapshot) { applyContent(snapshot.val()); });
+  </script>
+
 </body>
 </html>
-
