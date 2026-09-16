@@ -143,7 +143,9 @@
       <div class="card">
         <div class="card-header"><h2>Hero</h2></div>
         <div class="field-row"><label>Logo URL</label><input type="url" id="heroLogo" placeholder="https://.../logo.png"></div>
-        <div class="field-row"><label>Hero Background URL</label><input type="url" id="heroBackground" placeholder="https://.../hero.png"></div>
+        <div class="field-row"><label>Hero Background — Desktop</label><input type="url" id="heroBackgroundDesktop" placeholder="https://.../hero-desktop.png"></div>
+        <div class="field-row"><label>Hero Background — Tablet (optional)</label><input type="url" id="heroBackgroundTablet" placeholder="https://.../hero-tablet.png"></div>
+        <div class="field-row"><label>Hero Background — Mobile (optional)</label><input type="url" id="heroBackgroundMobile" placeholder="https://.../hero-mobile.png"></div>
       </div>
 
       <div class="card">
@@ -166,6 +168,15 @@
         <div class="card-header"><h2>Gallery Photos</h2><span class="count" id="galleryCount">0 items</span></div>
         <div id="galleryImages" class="item-list"><div class="loading">Loading...</div></div>
         <button class="btn btn-add" onclick="addImageItem('galleryImages')">+ Add Gallery Photo</button>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><h2>Featured Story (first reel)</h2></div>
+        <p style="color:var(--muted);font-size:13px;margin-top:0;margin-bottom:14px;">Paste the MP4 video URL of the first reel to play it like an Instagram story (autoplay, tap for full screen). Instagram embeds cannot hide profile names/likes.</p>
+        <div class="field-row"><label>MP4 Video URL</label><input type="url" id="storyMp4" placeholder="https://.../reel1.mp4"></div>
+        <div class="field-row"><label>Poster Image URL (optional)</label><input type="url" id="storyPoster" placeholder="https://.../poster.jpg"></div>
+        <div class="field-row"><label>Caption</label><input type="text" id="storyCaption" placeholder="Story caption"></div>
+        <div class="field-row"><label>Views Count</label><input type="text" id="storyViews" placeholder="e.g. 12.5K views"></div>
       </div>
 
       <div class="card">
@@ -204,7 +215,9 @@
 
     const defaultData = {
       heroLogo: 'https://ruachmedia.github.io/rise/logo.png',
-      heroBackground: 'https://ruachmedia.github.io/rise/hero.png',
+      heroBackgroundDesktop: 'https://ruachmedia.github.io/rise/hero.png',
+      heroBackgroundTablet: 'https://ruachmedia.github.io/rise/hero.png',
+      heroBackgroundMobile: 'https://ruachmedia.github.io/rise/hero.png',
       aboutImage: 'https://images.unsplash.com/photo-1598387993281-cecf8b71a8f8?auto=format&fit=crop&w=1200&q=85',
       whyPhoto: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1600&q=85',
       courseImages: [
@@ -241,7 +254,13 @@
         { quote: 'I came in with zero audio knowledge. After the 6-day training, I was confidently running the church sound console and helping the worship team every Sunday.', name: 'Arun Kumar', role: 'Church Sound Volunteer — Hyderabad' },
         { quote: 'The practical sessions were the best part. I got to set up the console, configure DSP and actually mix for a live event before the course ended.', name: 'Rahul S.', role: 'Event Technician — Bangalore' },
         { quote: 'As a sound rental owner, this course helped me train my team faster. The system tuning and amplifier modules alone saved me hours on every setup.', name: 'Michael Joseph', role: 'Rental Business Owner — Secunderabad' }
-      ]
+      ],
+      featuredStory: {
+        mp4: '',
+        poster: '',
+        caption: 'Watch the latest student story',
+        views: ''
+      }
     };
 
     function escapeHtml(str) {
@@ -343,9 +362,16 @@
 
     function renderData(data) {
       document.getElementById('heroLogo').value = data.heroLogo || '';
-      document.getElementById('heroBackground').value = data.heroBackground || '';
+      document.getElementById('heroBackgroundDesktop').value = data.heroBackgroundDesktop || '';
+      document.getElementById('heroBackgroundTablet').value = data.heroBackgroundTablet || '';
+      document.getElementById('heroBackgroundMobile').value = data.heroBackgroundMobile || '';
       document.getElementById('aboutImage').value = data.aboutImage || '';
       document.getElementById('whyPhoto').value = data.whyPhoto || '';
+      const fs = data.featuredStory || {};
+      document.getElementById('storyMp4').value = fs.mp4 || '';
+      document.getElementById('storyPoster').value = fs.poster || '';
+      document.getElementById('storyCaption').value = fs.caption || '';
+      document.getElementById('storyViews').value = fs.views || '';
 
       ['courseImages','galleryImages','reels'].forEach(id => {
         const container = document.getElementById(id);
@@ -395,9 +421,17 @@
       setStatus('Saving & publishing...');
       const payload = {
         heroLogo: document.getElementById('heroLogo').value.trim(),
-        heroBackground: document.getElementById('heroBackground').value.trim(),
+        heroBackgroundDesktop: document.getElementById('heroBackgroundDesktop').value.trim(),
+        heroBackgroundTablet: document.getElementById('heroBackgroundTablet').value.trim(),
+        heroBackgroundMobile: document.getElementById('heroBackgroundMobile').value.trim(),
         aboutImage: document.getElementById('aboutImage').value.trim(),
         whyPhoto: document.getElementById('whyPhoto').value.trim(),
+        featuredStory: {
+          mp4: document.getElementById('storyMp4').value.trim(),
+          poster: document.getElementById('storyPoster').value.trim(),
+          caption: document.getElementById('storyCaption').value.trim(),
+          views: document.getElementById('storyViews').value.trim()
+        },
         courseImages: getImageValues('courseImages'),
         gallery: getImageValues('galleryImages'),
         reels: getImageValues('reels'),
