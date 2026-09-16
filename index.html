@@ -1,1 +1,2290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RUACH Institute of Sound Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue: #168cff;
+      --blue-light: #43a7ff;
+      --black: #05070b;
+      --section-black: #090e16;
+      --white: #ffffff;
+      --muted: rgba(255,255,255,.72);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--black);
+      color: var(--white);
+      font-family: Inter, Arial, sans-serif;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      overflow: hidden;
+      background: var(--black) url('https://ruachmedia.github.io/rise/hero.png') center right / cover no-repeat;
+      background-attachment: fixed;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, #05070b 0%, rgba(5,7,11,.97) 27%, rgba(5,7,11,.76) 54%, rgba(5,7,11,.12) 100%);
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      width: min(1160px, calc(100% - 48px));
+      min-height: 100vh;
+      margin: auto;
+      padding: 34px 0 72px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand img {
+      display: block;
+      width: clamp(150px, 17vw, 215px);
+      height: auto;
+    }
+
+    .hero-content {
+      width: min(620px, 100%);
+      margin: auto 0;
+      padding: 72px 0 35px;
+    }
+
+    .eyebrow, .section-label {
+      margin: 0 0 18px;
+      color: var(--blue-light);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 32px;
+      height: 2px;
+      margin: 0 10px 3px 0;
+      background: var(--blue);
+      box-shadow: 0 0 12px rgba(22,140,255,.8);
+    }
+
+    h1 {
+      max-width: 650px;
+      margin: 0;
+      font-size: clamp(42px, 6vw, 76px);
+      line-height: 1.02;
+      letter-spacing: -.055em;
+    }
+
+    h1 span { color: var(--blue-light); }
+
+    .hero-intro {
+      max-width: 590px;
+      margin: 26px 0 26px;
+      color: var(--muted);
+      font-size: clamp(16px, 1.7vw, 18px);
+      line-height: 1.7;
+    }
+
+    .duration {
+      display: inline-block;
+      margin-bottom: 18px;
+      padding: 9px 14px;
+      border: 1px solid rgba(67,167,255,.5);
+      border-radius: 50px;
+      background: rgba(22,140,255,.1);
+      color: #d9efff;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 24px;
+      max-width: 570px;
+      margin: 0 0 32px;
+      padding: 0;
+      list-style: none;
+      color: rgba(255,255,255,.9);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .features li::before {
+      content: '✓';
+      margin-right: 8px;
+      color: var(--blue-light);
+      font-weight: 800;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 50px;
+      padding: 0 24px;
+      border: 1px solid var(--blue);
+      border-radius: 5px;
+      font-size: 14px;
+      font-weight: 700;
+      transition: .2s ease;
+    }
+
+    .button.primary {
+      background: var(--blue);
+      box-shadow: 0 10px 28px rgba(22,140,255,.25);
+    }
+
+    .button.secondary {
+      background: rgba(255,255,255,.05);
+    }
+
+    .button:hover {
+      background: var(--blue-light);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(22,140,255,.35);
+    }
+
+    .about-section {
+      background: var(--section-black);
+      padding: 112px 0;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: clamp(45px, 7vw, 100px);
+      align-items: center;
+    }
+
+    .about-photo {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      border-radius: 18px;
+      background: #111923;
+    }
+
+    .about-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(145deg, rgba(22,140,255,.18), transparent 45%, rgba(0,0,0,.3));
+      pointer-events: none;
+    }
+
+    .about-photo img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .about-copy {
+      max-width: 520px;
+    }
+
+    .about-copy h2 {
+      margin: 0 0 22px;
+      font-size: clamp(34px, 4.3vw, 56px);
+      line-height: 1.05;
+      letter-spacing: -.055em;
+    }
+
+    .about-copy h2 span { color: var(--blue-light); }
+
+    .about-copy p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.85;
+    }
+
+    .about-copy p + p {
+      margin-top: 18px;
+    }
+
+    .about-rule {
+      width: 58px;
+      height: 3px;
+      margin: 0 0 24px;
+      background: var(--blue);
+      box-shadow: 0 0 14px rgba(22,140,255,.7);
+    }
+
+    @media (max-width: 760px) {
+      .hero {
+        background-position: 68% center;
+        background-attachment: scroll;
+      }
+
+      .hero::before {
+        background: linear-gradient(90deg, rgba(5,7,11,.97), rgba(5,7,11,.78));
+      }
+
+      .hero-inner, .container {
+        width: min(100% - 36px, 560px);
+      }
+
+      .hero-content { padding-top: 80px; }
+
+      .features { grid-template-columns: 1fr; }
+
+      .about-section { padding: 76px 0; }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 42px;
+      }
+
+      .about-photo { aspect-ratio: 4 / 3; }
+    }
+
+    .why-section {
+      background: var(--black);
+      padding: 112px 0;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+
+    .why-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .why-header h2 {
+      margin: 0 0 18px;
+      font-size: clamp(34px, 4.3vw, 56px);
+      line-height: 1.05;
+      letter-spacing: -.055em;
+    }
+
+    .why-header h2 span { color: var(--blue-light); }
+
+    .why-header p {
+      max-width: 620px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 28px;
+    }
+
+    .why-card {
+      padding: 30px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.08);
+      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+    }
+
+    .why-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(22,140,255,.4);
+      box-shadow: 0 16px 40px rgba(22,140,255,.12);
+    }
+
+    .why-card h3 {
+      margin: 0 0 12px;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--white);
+    }
+
+    .why-card h3::before {
+      content: '✓';
+      display: inline-block;
+      margin-right: 10px;
+      color: var(--blue-light);
+    }
+
+    .why-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .why-photo {
+      margin-top: 64px;
+      width: 100%;
+      max-height: 420px;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #111923;
+    }
+
+    .why-photo img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      max-height: 420px;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    @media (max-width: 900px) {
+      .why-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 760px) {
+      .why-section { padding: 76px 0; }
+      .why-grid { grid-template-columns: 1fr; gap: 20px; }
+      .why-header { margin-bottom: 42px; }
+      .why-photo { margin-top: 42px; }
+    }
+
+    .courses-section {
+      background: var(--section-black);
+      padding: 112px 0;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+
+    .courses-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .courses-header h2 {
+      margin: 0 0 16px;
+      font-size: clamp(34px, 4.3vw, 56px);
+      line-height: 1.05;
+      letter-spacing: -.055em;
+    }
+
+    .courses-header h2 span { color: var(--blue-light); }
+
+    .courses-header p {
+      max-width: 620px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 28px;
+    }
+
+    .course-card {
+      overflow: hidden;
+      border-radius: 16px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.1);
+      box-shadow: 0 8px 32px rgba(0,0,0,.25);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .course-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 48px rgba(22,140,255,.18);
+    }
+
+    .course-img {
+      width: 100%;
+      height: 160px;
+      overflow: hidden;
+      background: #111923;
+    }
+
+    .course-img img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .4s ease;
+    }
+
+    .course-card:hover .course-img img {
+      transform: scale(1.06);
+    }
+
+    .course-head {
+      padding: 16px 24px;
+      background: linear-gradient(135deg, rgba(22,140,255,.95), rgba(67,167,255,.85));
+      border-bottom: 1px solid rgba(255,255,255,.12);
+    }
+
+    .course-head h3 {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 800;
+      color: #fff;
+      text-shadow: 0 1px 2px rgba(0,0,0,.2);
+    }
+
+    .course-body {
+      padding: 22px 24px 28px;
+    }
+
+    .course-card ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.7;
+    }
+
+    .course-card li {
+      position: relative;
+      padding-left: 18px;
+      margin-bottom: 9px;
+    }
+
+    .course-card li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 9px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--blue);
+      box-shadow: 0 0 8px rgba(22,140,255,.7);
+    }
+
+    @media (max-width: 980px) {
+      .courses-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 760px) {
+      .courses-section { padding: 76px 0; }
+      .courses-grid { grid-template-columns: 1fr; gap: 22px; }
+      .courses-header { margin-bottom: 42px; }
+    }
+
+    .audience-section {
+      background: linear-gradient(180deg, var(--section-black) 0%, var(--black) 100%);
+      padding: 112px 0;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+
+    .audience-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .audience-header h2 {
+      margin: 0 0 16px;
+      font-size: clamp(34px, 4.3vw, 56px);
+      line-height: 1.05;
+      letter-spacing: -.055em;
+    }
+
+    .audience-header h2 span { color: var(--blue-light); }
+
+    .audience-header p {
+      max-width: 620px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .audience-card {
+      position: relative;
+      padding: 28px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.1);
+      text-align: center;
+      transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+    }
+
+    .audience-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(22,140,255,.5);
+      box-shadow: 0 16px 40px rgba(22,140,255,.18);
+    }
+
+    .audience-icon {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(22,140,255,.2), rgba(67,167,255,.1));
+      border: 1px solid rgba(22,140,255,.35);
+      color: var(--blue-light);
+      font-size: 0;
+      font-weight: 800;
+    }
+
+    .audience-icon::before {
+      content: '✓';
+      font-size: 22px;
+    }
+
+    .audience-card h3 {
+      margin: 0 0 8px;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .audience-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 900px) {
+      .audience-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 760px) {
+      .audience-section { padding: 76px 0; }
+      .audience-grid { grid-template-columns: 1fr; gap: 18px; }
+      .audience-header { margin-bottom: 42px; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal:nth-child(1) { transition-delay: 0s; }
+    .reveal:nth-child(2) { transition-delay: .05s; }
+    .reveal:nth-child(3) { transition-delay: .10s; }
+    .reveal:nth-child(4) { transition-delay: .15s; }
+    .reveal:nth-child(5) { transition-delay: .20s; }
+    .reveal:nth-child(6) { transition-delay: .25s; }
+    .reveal:nth-child(7) { transition-delay: .30s; }
+    .reveal:nth-child(8) { transition-delay: .35s; }
+    .reveal:nth-child(9) { transition-delay: .40s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
+
+    .scroll-top {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      z-index: 99;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--blue);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 6px 24px rgba(22,140,255,.35);
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+      transition: opacity .3s ease, transform .3s ease, background .2s ease;
+    }
+
+    .scroll-top.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .scroll-top:hover {
+      background: var(--blue-light);
+    }
+
+    .scroll-top svg {
+      width: 22px;
+      height: 22px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .testimonials-section {
+      background: var(--section-black);
+      padding: 112px 0;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+
+    .testimonials-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .testimonials-header h2 {
+      margin: 0 0 16px;
+      font-size: clamp(34px, 4.3vw, 56px);
+      line-height: 1.05;
+      letter-spacing: -.055em;
+    }
+
+    .testimonials-header h2 span { color: var(--blue-light); }
+
+    .testimonials-header p {
+      max-width: 720px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 28px;
+    }
+
+    .testimonial-card {
+      padding: 32px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.1);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 40px rgba(22,140,255,.15);
+    }
+
+    .testimonial-quote {
+      margin: 0 0 24px;
+      color: rgba(255,255,255,.86);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .testimonial-quote::before {
+      content: '“';
+      display: block;
+      color: var(--blue-light);
+      font-size: 48px;
+      line-height: 1;
+      margin-bottom: 6px;
+      font-family: Georgia, serif;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .testimonial-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--blue-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .testimonial-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .testimonial-role {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .testimonial-video {
+      margin-top: 24px;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #111923;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255,255,255,.12);
+      position: relative;
+    }
+
+    .testimonial-video img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: .7;
+    }
+
+    .play-button {
+      position: absolute;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(22,140,255,.4);
+      transition: transform .2s ease, background .2s ease;
+      cursor: pointer;
+    }
+
+    .play-button:hover {
+      transform: scale(1.1);
+      background: var(--blue-light);
+    }
+
+    .play-button svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+      margin-left: 3px;
+    }
+
+    @media (max-width: 980px) {
+      .testimonials-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 760px) {
+      .testimonials-section { padding: 76px 0; }
+      .testimonials-header { margin-bottom: 42px; }
+    }
+
+    .gallery-section {
+      background: var(--black);
+      padding: 112px 0;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+
+    .gallery-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .gallery-header h2 {
+      margin: 0 0 16px;
+      font-size: clamp(34px, 4.3vw, 56px);
+      line-height: 1.05;
+      letter-spacing: -.055em;
+    }
+
+    .gallery-header h2 span { color: var(--blue-light); }
+
+    .gallery-header p {
+      max-width: 720px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-auto-rows: 220px;
+      gap: 18px;
+      margin-bottom: 64px;
+    }
+
+    .gallery-photo {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      background: #111923;
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+
+    .gallery-photo:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 14px 36px rgba(22,140,255,.2);
+    }
+
+    .gallery-photo img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .videos-header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .videos-header h3 {
+      margin: 0 0 10px;
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -.03em;
+    }
+
+    .videos-header h3 span { color: var(--blue-light); }
+
+    .videos-header p {
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 28px;
+    }
+
+    .video-card {
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.1);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .video-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 40px rgba(22,140,255,.18);
+    }
+
+    .video-card iframe {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: none;
+    }
+
+    .video-caption {
+      padding: 16px 20px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 980px) {
+      .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .gallery-photo:nth-child(3),
+      .gallery-photo:nth-child(6) { grid-row: span 1; }
+      .videos-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 760px) {
+      .gallery-section { padding: 76px 0; }
+      .gallery-header { margin-bottom: 42px; }
+      .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+      .videos-grid { grid-template-columns: 1fr; }
+    }
+
+    .faq-section {
+      background: var(--section-black);
+      padding: 112px 0;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+
+    .faq-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    .faq-header h2 {
+      margin: 0 0 16px;
+      font-size: clamp(34px, 4.3vw, 56px);
+      line-height: 1.05;
+      letter-spacing: -.055em;
+    }
+
+    .faq-header h2 span { color: var(--blue-light); }
+
+    .faq-header p {
+      max-width: 620px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .faq-list {
+      max-width: 760px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .faq-item {
+      border-radius: 16px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.1);
+      overflow: hidden;
+      transition: border-color .2s ease;
+    }
+
+    .faq-item.open {
+      border-color: rgba(22,140,255,.5);
+      background: rgba(22,140,255,.06);
+    }
+
+    .faq-question {
+      width: 100%;
+      padding: 24px 26px;
+      background: transparent;
+      border: none;
+      color: var(--white);
+      font-size: 17px;
+      font-weight: 700;
+      text-align: left;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      gap: 18px;
+      line-height: 1.45;
+    }
+
+    .faq-question::after {
+      content: '+';
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(22,140,255,.12);
+      color: var(--blue-light);
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .faq-item.open .faq-question::after {
+      content: '−';
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .3s ease, padding .3s ease;
+      color: var(--muted);
+      font-size: 15.5px;
+      line-height: 1.8;
+      padding: 0 26px;
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 240px;
+      padding: 0 26px 26px;
+    }
+
+    @media (max-width: 760px) {
+      .faq-section { padding: 76px 0; }
+      .faq-header { margin-bottom: 42px; }
+      .faq-question { font-size: 16px; padding: 20px 22px; }
+      .faq-answer { font-size: 14.5px; padding: 0 22px; }
+      .faq-item.open .faq-answer { padding: 0 22px 22px; }
+    }
+
+    .contact-section {
+      background: linear-gradient(180deg, var(--black) 0%, var(--section-black) 100%);
+      padding: 112px 0;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+
+    .contact-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .contact-header h2 {
+      margin: 0 0 16px;
+      font-size: clamp(34px, 4.3vw, 56px);
+      line-height: 1.05;
+      letter-spacing: -.055em;
+    }
+
+    .contact-header h2 span { color: var(--blue-light); }
+
+    .contact-subtitle {
+      display: inline-block;
+      margin-bottom: 24px;
+      padding: 10px 18px;
+      border-radius: 50px;
+      background: rgba(22,140,255,.12);
+      border: 1px solid rgba(22,140,255,.35);
+      color: var(--blue-light);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .04em;
+    }
+
+    .contact-card {
+      max-width: 720px;
+      margin: 0 auto 40px;
+      padding: 40px;
+      border-radius: 20px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.1);
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 36px;
+    }
+
+    .contact-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 15.5px;
+      line-height: 1.7;
+    }
+
+    .contact-icon {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      background: rgba(22,140,255,.12);
+      color: var(--blue-light);
+      font-size: 18px;
+    }
+
+    .contact-row strong {
+      color: var(--white);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .contact-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+    }
+
+    .footer {
+      background: linear-gradient(180deg, #0d1828 0%, #070b12 100%);
+      padding: 60px 24px 32px;
+      border-top: 1px solid rgba(22,140,255,.18);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.2fr auto auto auto;
+      gap: 42px;
+      align-items: start;
+      text-align: left;
+    }
+
+    .footer-brand {
+      max-width: 320px;
+    }
+
+    .footer-brand strong {
+      display: block;
+      color: var(--white);
+      font-size: 17px;
+      margin-bottom: 12px;
+    }
+
+    .footer-brand p {
+      margin: 0 0 16px;
+      line-height: 1.7;
+    }
+
+    .footer-contact p {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .footer-contact a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .footer-contact a:hover { color: var(--blue-light); }
+
+    .footer-links h4,
+    .footer-social h4,
+    .footer-contact h4 {
+      margin: 0 0 14px;
+      color: var(--white);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .footer-links ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color .2s ease;
+    }
+
+    .footer-links a:hover { color: var(--blue-light); }
+
+    .social-list {
+      display: flex;
+      gap: 12px;
+    }
+
+    .social-list a {
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      color: var(--white);
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .social-list a:hover {
+      background: rgba(22,140,255,.15);
+      transform: translateY(-2px);
+    }
+
+    .social-list svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    .footer-bottom {
+      max-width: 1100px;
+      margin: 40px auto 0;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 760px) {
+      .footer-inner {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        text-align: center;
+      }
+      .footer-brand { max-width: none; }
+      .social-list { justify-content: center; }
+      .footer-links ul { align-items: center; }
+    }
+
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(5,7,11,.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .site-header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 16px;
+      padding-bottom: 16px;
+    }
+
+    .header-logo {
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      line-height: 1.15;
+    }
+
+    .logo-main {
+      color: var(--white);
+      font-size: 23px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+
+    .logo-sub {
+      color: var(--blue-light);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .03em;
+    }
+
+    .header-nav ul {
+      display: flex;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .header-nav a {
+      position: relative;
+      padding: 8px 12px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color .2s ease;
+    }
+
+    .header-nav a::after {
+      content: '';
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: -2px;
+      height: 2px;
+      background: var(--blue-light);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .25s ease;
+    }
+
+    .header-nav a:hover {
+      color: var(--white);
+    }
+
+    .header-nav a:hover::after {
+      transform: scaleX(1);
+    }
+
+    .header-apply {
+      display: inline-flex;
+      padding: 8px 16px;
+      border-radius: 50px;
+      background: var(--blue);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background .2s ease;
+    }
+
+    .header-apply:hover { background: var(--blue-light); }
+
+    .floating-buttons {
+      position: fixed;
+      left: 22px;
+      bottom: 22px;
+      z-index: 99;
+      display: flex;
+      flex-direction: column-reverse;
+      gap: 12px;
+    }
+
+    @media (max-width: 760px) {
+      .header-nav { display: none; }
+    }
+
+    .floating-buttons a,
+    .floating-buttons button {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 6px 24px rgba(0,0,0,.35);
+      transition: transform .2s ease, opacity .3s ease;
+    }
+
+    .floating-buttons a:hover,
+    .floating-buttons button:hover {
+      transform: scale(1.08);
+    }
+
+    .whatsapp-float {
+      background: #25d366;
+      color: #fff;
+    }
+
+    .whatsapp-float svg {
+      width: 26px;
+      height: 26px;
+      fill: currentColor;
+    }
+
+    .scroll-top {
+      background: var(--blue);
+      color: #fff;
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+    }
+
+    .scroll-top.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .scroll-top:hover {
+      background: var(--blue-light);
+    }
+
+    .scroll-top svg {
+      width: 22px;
+      height: 22px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    @media (max-width: 760px) {
+      .contact-section { padding: 76px 0; }
+      .contact-card { padding: 28px 24px; }
+      .contact-actions .button { flex: 1 1 100%; }
+    }
+
+    .batch-section {
+      background: linear-gradient(180deg, var(--black) 0%, var(--section-black) 100%);
+      padding: 80px 0;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+
+    .batch-card {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 56px;
+      border-radius: 24px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.1);
+      border-left: 4px solid var(--blue);
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .batch-main { text-align: left; }
+
+    .batch-badge {
+      display: inline-block;
+      margin-bottom: 16px;
+      padding: 8px 16px;
+      border-radius: 50px;
+      background: rgba(22,140,255,.15);
+      border: 1px solid rgba(22,140,255,.4);
+      color: var(--blue-light);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .batch-title {
+      margin: 0 0 16px;
+      font-size: clamp(28px, 3.2vw, 42px);
+      letter-spacing: -.04em;
+      line-height: 1.15;
+      color: var(--white);
+    }
+
+    .batch-date {
+      color: var(--blue-light);
+    }
+
+    .batch-time {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 22px;
+      color: var(--muted);
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .batch-time::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #22c55e;
+    }
+
+    .batch-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .batch-meta span {
+      padding: 8px 14px;
+      border-radius: 50px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .batch-side {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 28px;
+      border-radius: 18px;
+      background: rgba(22,140,255,.08);
+      border: 1px solid rgba(22,140,255,.25);
+    }
+
+    .batch-status {
+      margin-bottom: 16px;
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .batch-status.open {
+      background: rgba(34,197,94,.15);
+      border: 1px solid rgba(34,197,94,.4);
+      color: #4ade80;
+    }
+
+    .batch-status.closed {
+      background: rgba(239,68,68,.15);
+      border: 1px solid rgba(239,68,68,.4);
+      color: #f87171;
+    }
+
+    .seats-number {
+      margin-bottom: 10px;
+    }
+
+    .seats-number strong {
+      font-size: 64px;
+      line-height: 1;
+      color: var(--blue-light);
+    }
+
+    .seats-label {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .batch-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      margin-top: 18px;
+    }
+
+    .batch-actions .button { width: 100%; }
+
+    .batch-card.batch-full .batch-actions,
+    .batch-card.batch-full .seats-number,
+    .batch-card.batch-full .seats-label { display: none; }
+
+    .batch-closed-note {
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .batch-note {
+      grid-column: 1 / -1;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+      margin-top: -16px;
+    }
+
+    .batch-note strong { color: var(--white); }
+
+    .batch-teaser {
+      grid-column: 1 / -1;
+      text-align: center;
+      margin-top: 8px;
+      padding: 14px 24px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.04);
+      border: 1px dashed rgba(255,255,255,.15);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .batch-teaser strong {
+      color: var(--white);
+      font-size: 15px;
+    }
+
+    @media (max-width: 760px) {
+      .batch-section { padding: 60px 0; }
+      .batch-card { grid-template-columns: 1fr; padding: 28px 24px; gap: 28px; }
+      .batch-main { text-align: center; }
+      .batch-meta { justify-content: center; }
+      .seats-number strong { font-size: 52px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="header-logo" href="#top">
+        <span class="logo-main">RAUCH</span>
+        <span class="logo-sub">Institute of Sound Engineering</span>
+      </a>
+      <nav class="header-nav" aria-label="Main navigation">
+        <ul>
+          <li><a href="#top">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#modules">Modules</a></li>
+          <li><a href="#join">Who Can Join</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <a class="header-apply" href="#apply">Apply Now</a>
+    </div>
+  </header>
+
+  <main class="hero" id="top">
+    <div class="hero-inner">
+      <a class="brand" href="#top" aria-label="RUACH Institute of Sound Engineering">
+        <img src="https://ruachmedia.github.io/rise/logo.png" alt="RUACH Institute of Sound Engineering logo">
+      </a>
+
+      <section class="hero-content" aria-labelledby="hero-title">
+        <p class="eyebrow">RUACH Institute of Sound Engineering</p>
+        <h1 id="hero-title">Become a <span>Professional</span> Live Sound Engineer</h1>
+        <p class="hero-intro">Master the art of Live Sound Engineering through an intensive practical training program designed for churches, concerts, worship teams, live events, and sound rental businesses.</p>
+        <div class="duration">6 Days Intensive Practical Training</div>
+        <ul class="features">
+          <li>100% Hands-on Practical Training</li>
+          <li>Digital Console Operation &amp; Mixing</li>
+          <li>DSP &amp; DriveRack Configuration</li>
+          <li>Crown Amplifier Configuration</li>
+          <li>Professional System Tuning</li>
+          <li>Live Sound Workflow</li>
+        </ul>
+        <div class="actions">
+          <a class="button primary" href="#apply">Apply Now</a>
+          <a class="button secondary" href="https://wa.me/" target="_blank" rel="noopener">WhatsApp Us</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <section class="batch-section" id="batch" aria-labelledby="batch-title">
+    <div class="container">
+      <div class="batch-card">
+        <div class="batch-main">
+          <div class="batch-badge">Admissions Open</div>
+          <h2 id="batch-title" class="batch-title">Next Batch: <span class="batch-date">21st – 26th September</span></h2>
+          <div class="batch-time">09:30 AM – 03:30 PM Daily</div>
+          <div class="batch-meta">
+            <span>6 Days Intensive</span>
+            <span>Hands-on Practical</span>
+            <span>Max 20 Seats</span>
+          </div>
+        </div>
+
+        <div class="batch-side">
+          <div class="batch-status open" id="batchStatus">Admissions Open</div>
+          <div class="seats-number"><strong>12</strong></div>
+          <div class="seats-label">Seats Available</div>
+          <div class="batch-actions">
+            <a class="button primary" href="#apply">Book Your Seat</a>
+            <a class="button secondary" href="https://wa.me/919642557796" target="_blank" rel="noopener">Ask on WhatsApp</a>
+          </div>
+          <p class="batch-closed-note" style="display:none;">Admissions are closed. Please wait for the next batch.</p>
+        </div>
+
+        <p class="batch-note"><strong>Admissions close 1 day before the batch starts.</strong> If seats are full, you will be added to the waitlist.</p>
+
+        <div class="batch-teaser">
+          <strong>Next Batch in July — Coming Soon</strong><br>
+          Registrations will open soon. Secure your spot early.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-section" id="about" aria-labelledby="about-title">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-photo">
+          <img src="https://images.unsplash.com/photo-1598387993281-cecf8b71a8f8?auto=format&fit=crop&w=1200&q=85" loading="lazy" decoding="async" alt="Audio engineer working with professional sound equipment">
+        </div>
+
+        <div class="about-copy">
+          <p class="section-label">About Us</p>
+          <div class="about-rule"></div>
+          <h2 id="about-title">Learn Live Sound the <span>Practical Way</span></h2>
+          <p><strong>RUACH Institute of Sound Engineering</strong> is dedicated to providing industry-oriented Live Sound Engineering training with a strong emphasis on practical learning.</p>
+          <p>Our curriculum is carefully designed to help students understand the complete workflow of professional live sound—from audio fundamentals and digital console operation to system tuning and live event execution.</p>
+          <p>Whether you're a beginner or already working in the audio industry, this course equips you with practical skills that can be applied immediately in real-world environments.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="why-section" id="why" aria-labelledby="why-title">
+    <div class="container">
+      <div class="why-header">
+        <p class="section-label">Why Choose Us</p>
+        <h2 id="why-title">Why Choose <span>RUACH?</span></h2>
+        <p>Everything you need to start operating professional live sound systems with confidence.</p>
+      </div>
+
+      <div class="why-grid">
+        <article class="why-card">
+          <h3>Practical-Based Learning</h3>
+          <p>Gain real hands-on experience using professional live sound equipment.</p>
+        </article>
+        <article class="why-card">
+          <h3>Industry-Focused Curriculum</h3>
+          <p>Training designed around real workflows used in churches, concerts, conferences, and live events.</p>
+        </article>
+        <article class="why-card">
+          <h3>Beginner Friendly</h3>
+          <p>No previous experience is required. We teach everything from the basics.</p>
+        </article>
+        <article class="why-card">
+          <h3>Learn from Real Industry Workflow</h3>
+          <p>Understand how professional sound engineers prepare, mix, tune, and manage complete live sound systems.</p>
+        </article>
+        <article class="why-card">
+          <h3>Small Batch Training</h3>
+          <p>Limited seats ensure every student receives individual practical attention.</p>
+        </article>
+        <article class="why-card">
+          <h3>Certificate of Completion</h3>
+          <p>Receive a professional course completion certificate after successfully completing the training.</p>
+        </article>
+      </div>
+
+      <div class="why-photo">
+        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1600&q=85" alt="Professional studio headphones and audio equipment">
+      </div>
+    </div>
+  </section>
+
+  <section class="courses-section" id="modules" aria-labelledby="modules-title">
+    <div class="container">
+      <div class="courses-header">
+        <p class="section-label">Course Modules</p>
+        <h2 id="modules-title">What You Will <span>Learn</span></h2>
+        <p>A complete, step-by-step syllabus designed to take you from the basics to real live sound operation.</p>
+      </div>
+
+      <div class="courses-grid">
+        <article class="course-card">
+          <div class="course-img">
+            <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80" loading="lazy" decoding="async" alt="Audio fundamentals headphones">
+          </div>
+          <div class="course-head"><h3>Audio Fundamentals</h3></div>
+          <div class="course-body">
+            <ul>
+              <li>Introduction to Live Sound Engineering</li>
+              <li>What is Sound?</li>
+              <li>How Sound is Produced</li>
+              <li>Frequency & Wavelength</li>
+              <li>Human Hearing Range</li>
+              <li>Audio Signal Flow</li>
+              <li>Balanced & Unbalanced Audio</li>
+              <li>Mic, Line & Speaker Levels</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="course-card">
+          <div class="course-img">
+            <img src="https://images.unsplash.com/photo-1590602847861-f357a933cd1e?auto=format&fit=crop&w=800&q=80" loading="lazy" decoding="async" alt="Microphone and cables">
+          </div>
+          <div class="course-head"><h3>Microphones & Audio Connections</h3></div>
+          <div class="course-body">
+            <ul>
+              <li>Audio Cables & Connectors</li>
+              <li>DI Box</li>
+              <li>Microphone Types</li>
+              <li>Polar Patterns</li>
+              <li>Phantom Power (48V)</li>
+              <li>Microphone Placement Techniques</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="course-card">
+          <div class="course-img">
+            <img src="https://images.unsplash.com/photo-1514320291840-2e0a9bf5a094?auto=format&fit=crop&w=800&q=80" loading="lazy" decoding="async" alt="Mixing console faders">
+          </div>
+          <div class="course-head"><h3>Mixing Console Operation</h3></div>
+          <div class="course-body">
+            <ul>
+              <li>Analog Mixing Console</li>
+              <li>Digital Console Operation</li>
+              <li>Channel Strip Functions</li>
+              <li>Gain Structure</li>
+              <li>Channel EQ</li>
+              <li>AUX & Monitor Mixing</li>
+              <li>Routing</li>
+              <li>DCA & Matrix</li>
+              <li>Scenes & Presets</li>
+              <li>Console Workflow</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="course-card">
+          <div class="course-img">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80" loading="lazy" decoding="async" alt="Audio processing equalizer">
+          </div>
+          <div class="course-head"><h3>Audio Processing</h3></div>
+          <div class="course-body">
+            <ul>
+              <li>Equalization (EQ)</li>
+              <li>High Pass & Low Pass Filters</li>
+              <li>Compressor</li>
+              <li>Gate</li>
+              <li>Limiter</li>
+              <li>Feedback Control</li>
+              <li>FX Processing</li>
+              <li>Reverb & Delay</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="course-card">
+          <div class="course-img">
+            <img src="https://images.unsplash.com/photo-1525253604620-23ac591dbea0?auto=format&fit=crop&w=800&q=80" loading="lazy" decoding="async" alt="Live concert stage">
+          </div>
+          <div class="course-head"><h3>Digital Mixing & Live Workflow</h3></div>
+          <div class="course-body">
+            <ul>
+              <li>Digital Console Mixing</li>
+              <li>Live Mixing Techniques</li>
+              <li>Multitrack Recording</li>
+              <li>Professional Mixing Workflow</li>
+              <li>Monitor Mixing</li>
+              <li>Live Event Signal Management</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="course-card">
+          <div class="course-img">
+            <img src="https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=800&q=80" loading="lazy" decoding="async" alt="DSP rack equipment">
+          </div>
+          <div class="course-head"><h3>DSP & System Configuration</h3></div>
+          <div class="course-body">
+            <ul>
+              <li>DSP Fundamentals</li>
+              <li>DriveRack Configuration</li>
+              <li>Digital Crossovers</li>
+              <li>HPF / LPF</li>
+              <li>Phase & Polarity</li>
+              <li>Time Alignment</li>
+              <li>Signal Routing</li>
+              <li>System Optimization</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="course-card">
+          <div class="course-img">
+            <img src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&w=800&q=80" loading="lazy" decoding="async" alt="Amplifier speakers">
+          </div>
+          <div class="course-head"><h3>Amplifiers & PA Systems</h3></div>
+          <div class="course-body">
+            <ul>
+              <li>Crown Amplifier Configuration</li>
+              <li>Gain Settings</li>
+              <li>Stereo & Bridge Mode</li>
+              <li>Speaker Impedance Matching</li>
+              <li>Power Distribution</li>
+              <li>System Monitoring</li>
+              <li>Basic Troubleshooting</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="course-card">
+          <div class="course-img">
+            <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=800&q=80" loading="lazy" decoding="async" alt="Sound engineer at work">
+          </div>
+          <div class="course-head"><h3>Practical Sessions</h3></div>
+          <div class="course-body">
+            <ul>
+              <li>Console Setup</li>
+              <li>Live Sound System Setup</li>
+              <li>Stage Patch & Signal Flow</li>
+              <li>Digital Mixing Practice</li>
+              <li>DSP Configuration</li>
+              <li>System Tuning</li>
+              <li>Live Event Workflow</li>
+              <li>Hands-on Practical Exercises</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="audience-section" id="audience" aria-labelledby="audience-title">
+    <div class="container">
+      <div class="audience-header">
+        <p class="section-label">Who Can Join</p>
+        <h2 id="audience-title">Who Can <span>Join?</span></h2>
+        <p>This program is built for anyone ready to operate professional live sound systems.</p>
+      </div>
+
+      <div class="audience-grid">
+        <article class="audience-card">
+          <div class="audience-icon"></div>
+          <h3>Future Sound Engineers</h3>
+          <p>Start your career with the right practical foundation.</p>
+        </article>
+        <article class="audience-card">
+          <div class="audience-icon"></div>
+          <h3>Church Sound Teams</h3>
+          <p>Serve your worship services with clearer, better sound.</p>
+        </article>
+        <article class="audience-card">
+          <div class="audience-icon"></div>
+          <h3>Worship Musicians</h3>
+          <p>Understand the audio side of your own performances.</p>
+        </article>
+        <article class="audience-card">
+          <div class="audience-icon"></div>
+          <h3>Sound Vendors</h3>
+          <p>Improve setup speed and service quality for clients.</p>
+        </article>
+        <article class="audience-card">
+          <div class="audience-icon"></div>
+          <h3>Sound Rental Owners</h3>
+          <p>Run your inventory and teams more professionally.</p>
+        </article>
+        <article class="audience-card">
+          <div class="audience-icon"></div>
+          <h3>Event Technicians</h3>
+          <p>Handle live events confidently from start to finish.</p>
+        </article>
+        <article class="audience-card">
+          <div class="audience-icon"></div>
+          <h3>Media Teams</h3>
+          <p>Integrate audio with video, streaming and broadcast.</p>
+        </article>
+        <article class="audience-card">
+          <div class="audience-icon"></div>
+          <h3>Audio Enthusiasts</h3>
+          <p>Turn your passion for sound into practical skill.</p>
+        </article>
+        <article class="audience-card">
+          <div class="audience-icon"></div>
+          <h3>Complete Beginners</h3>
+          <p>No prior experience needed — we teach from the ground up.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="gallery-section" id="gallery" aria-labelledby="gallery-title">
+    <div class="container">
+      <div class="gallery-header">
+        <p class="section-label">Gallery</p>
+        <h2 id="gallery-title">Training <span>Moments</span></h2>
+        <p>Photos and reels from our live sound training sessions. Replace these with your own images and videos later.</p>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-photo"><img src="https://images.unsplash.com/photo-1598387993281-cecf8b71a8f8?auto=format&fit=crop&w=600&q=80" loading="lazy" decoding="async" alt="Sound training gallery photo"></div>
+        <div class="gallery-photo"><img src="https://images.unsplash.com/photo-1514320291840-2e0a9bf5a094?auto=format&fit=crop&w=600&q=80" loading="lazy" decoding="async" alt="Mixing console gallery photo"></div>
+        <div class="gallery-photo"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80" loading="lazy" decoding="async" alt="Studio headphones gallery photo"></div>
+        <div class="gallery-photo"><img src="https://images.unsplash.com/photo-1525253604620-23ac591dbea0?auto=format&fit=crop&w=600&q=80" loading="lazy" decoding="async" alt="Live event gallery photo"></div>
+        <div class="gallery-photo"><img src="https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=600&q=80" loading="lazy" decoding="async" alt="Audio equipment gallery photo"></div>
+        <div class="gallery-photo"><img src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&w=600&q=80" loading="lazy" decoding="async" alt="Speaker system gallery photo"></div>
+        <div class="gallery-photo"><img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=600&q=80" loading="lazy" decoding="async" alt="Sound engineer gallery photo"></div>
+        <div class="gallery-photo"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80" loading="lazy" decoding="async" alt="Equalizer gallery photo"></div>
+      </div>
+
+      <div class="videos-header">
+        <h3>Watch Our <span>Training Reels</span></h3>
+        <p>Short clips and highlights from classes and live setups.</p>
+      </div>
+
+      <div class="videos-grid">
+        <div class="video-card">
+          <iframe src="https://www.youtube.com/embed/M7lc1UVf-VE" title="Training reel 1" allowfullscreen></iframe>
+          <p class="video-caption">Live mixing basics — how to build a clean monitor mix.</p>
+        </div>
+        <div class="video-card">
+          <iframe src="https://www.youtube.com/embed/9bZkp7q19f0" title="Training reel 2" allowfullscreen></iframe>
+          <p class="video-caption">Setting up the console and stage patch for a live event.</p>
+        </div>
+        <div class="video-card">
+          <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Training reel 3" allowfullscreen></iframe>
+          <p class="video-caption">System tuning and amplifier configuration walkthrough.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials-section" id="testimonials" aria-labelledby="testimonials-title">
+    <div class="container">
+      <div class="testimonials-header">
+        <p class="section-label">Student Testimonials</p>
+        <h2 id="testimonials-title">What Our <span>Students Say</span></h2>
+        <p>Hear directly from our students who have transformed their knowledge and confidence through practical training at RUACH Institute of Sound Engineering.</p>
+      </div>
+
+      <div class="testimonials-grid">
+        <article class="testimonial-card">
+          <p class="testimonial-quote">I came in with zero audio knowledge. After the 6-day training, I was confidently running the church sound console and helping the worship team every Sunday.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">AK</div>
+            <div>
+              <div class="testimonial-name">Arun Kumar</div>
+              <div class="testimonial-role">Church Sound Volunteer</div>
+            </div>
+          </div>
+          <div class="testimonial-video">
+            <img src="https://images.unsplash.com/photo-1511376777868-611b54f68947?auto=format&fit=crop&w=800&q=80" loading="lazy" decoding="async" alt="Student testimonial thumbnail">
+            <button class="play-button" aria-label="Play testimonial video">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </button>
+          </div>
+        </article>
+
+        <article class="testimonial-card">
+          <p class="testimonial-quote">The practical sessions were the best part. I got to set up the console, configure DSP and actually mix for a live event before the course ended.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">RS</div>
+            <div>
+              <div class="testimonial-name">Rahul S.</div>
+              <div class="testimonial-role">Event Technician</div>
+            </div>
+          </div>
+          <div class="testimonial-video">
+            <img src="https://images.unsplash.com/photo-1598387993441-a364f8541f7a?auto=format&fit=crop&w=800&q=80" loading="lazy" decoding="async" alt="Student testimonial thumbnail">
+            <button class="play-button" aria-label="Play testimonial video">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </button>
+          </div>
+        </article>
+
+        <article class="testimonial-card">
+          <p class="testimonial-quote">As a sound rental owner, this course helped me train my team faster. The system tuning and amplifier modules alone saved me hours on every setup.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">MJ</div>
+            <div>
+              <div class="testimonial-name">Michael Joseph</div>
+              <div class="testimonial-role">Rental Business Owner</div>
+            </div>
+          </div>
+          <div class="testimonial-video">
+            <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80" loading="lazy" decoding="async" alt="Student testimonial thumbnail">
+            <button class="play-button" aria-label="Play testimonial video">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq-section" id="faq" aria-labelledby="faq-title">
+    <div class="container">
+      <div class="faq-header">
+        <p class="section-label">FAQ</p>
+        <h2 id="faq-title">Frequently Asked <span>Questions</span></h2>
+        <p>Quick answers to common questions about the training.</p>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item open">
+          <button class="faq-question" aria-expanded="true">Is this course beginner friendly?</button>
+          <div class="faq-answer">Yes. The course starts from the basics and gradually progresses to professional live sound engineering.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">Is this a practical course?</button>
+          <div class="faq-answer">Absolutely. The training focuses primarily on hands-on practical sessions with real equipment.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">Will I receive a certificate?</button>
+          <div class="faq-answer">Yes. Every student who successfully completes the course will receive a Course Completion Certificate.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">Can church sound teams join?</button>
+          <div class="faq-answer">Yes. This course is highly beneficial for church sound operators and worship teams.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">Can sound vendors and rental operators join?</button>
+          <div class="faq-answer">Yes. The course includes professional system setup, DSP configuration, amplifier setup, and live mixing techniques specifically useful for sound vendors and rental businesses.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-section" id="contact" aria-labelledby="contact-title">
+    <div class="container">
+      <div class="contact-header">
+        <p class="section-label">Contact Us</p>
+        <h2 id="contact-title">Get in <span>Touch</span></h2>
+        <div class="contact-subtitle">Admissions Open Now</div>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-info">
+          <div class="contact-row">
+            <div class="contact-icon">📍</div>
+            <div>
+              <strong>Address</strong>
+              A2, 156–159, Paigah Apartment, Sardar Patel Road, Viman Nagar, Kalasiguda, Secunderabad, Hyderabad – 500003
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="contact-icon">📞</div>
+            <div>
+              <strong>Phone</strong>
+              <a href="tel:+919642557796">+91 96425 57796</a>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="contact-icon">✉️</div>
+            <div>
+              <strong>Email</strong>
+              <a href="mailto:ruachruachmedia.in@gmail.com">ruachruachmedia.in@gmail.com</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-actions">
+          <a class="button primary" href="#apply">Apply Now</a>
+          <a class="button secondary" href="https://wa.me/919642557796" target="_blank" rel="noopener">Contact on WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <strong>RUACH Institute of Sound Engineering</strong>
+        <p>Industry-oriented live sound engineering training with practical, hands-on sessions designed for churches, concerts, worship teams, and live events.</p>
+        <div class="footer-contact">
+          <h4>Contact</h4>
+          <p>+91 96425 57796</p>
+          <p>ruachruachmedia.in@gmail.com</p>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#top">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#modules">Modules</a></li>
+          <li><a href="#join">Who Can Join</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-social">
+        <h4>Follow Us</h4>
+        <div class="social-list">
+          <a href="https://wa.me/919642557796" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24"><path d="M17.5 14.3c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.2-.7.9-.9 1.1-.2.2-.3.3-.6.1-.3-.1-1.2-.5-2.3-1.6-.9-.8-1.5-1.8-1.6-2.1-.1-.3 0-.4.1-.5.1-.1.3-.3.4-.4.1-.1.2-.2.3-.4.1-.2 0-.3 0-.4 0-.1-.7-1.7-1-2.4-.3-.7-.6-.5-.8-.5-.2 0-.4 0-.6.1-.2.1-1 .4-1.5.7-.5.4-1 .8-1.2 1.2-.2.4-.4 1-.2 1.9.2.9.6 1.8 1.1 2.6.5.7 1.3 1.6 2.2 2.3 1.2 1 2.4 1.5 3.1 1.7.7.2 1.2.2 1.6.1.4-.1 1-.4 1.5-.9.4-.4.7-.9.8-1.2.1-.3.1-.6 0-.7-.1-.2-.3-.3-.6-.4zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.2-1.2C8.5 21.4 10.2 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+          </a>
+          <a href="#" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.05.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.05.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.05-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.05-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.78.3-1.44.71-2.1 1.37C1.38 2.66.97 3.32.67 4.1.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.3.78.71 1.44 1.37 2.1.66.66 1.32 1.07 2.1 1.37.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56.78-.3 1.44-.71 2.1-1.37.66-.66 1.07-1.32 1.37-2.1.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91-.3-.78-.71-1.44-1.37-2.1C21.34 1.38 20.68.97 19.9.67c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 100 12.32 6.16 6.16 0 000-12.32zM12 16a4 4 0 110-8 4 4 0 010 8zm7.85-10.4a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0z"/></svg>
+          </a>
+          <a href="#" target="_blank" rel="noopener" aria-label="YouTube">
+            <svg viewBox="0 0 24 24"><path d="M23.5 6.19a3.02 3.02 0 00-2.12-2.14C19.51 3.54 12 3.54 12 3.54s-7.51 0-9.38.51A3.02 3.02 0 00.5 6.19 31.5 31.5 0 000 12a31.5 31.5 0 00.5 5.81 3.02 3.02 0 002.12 2.14c1.87.51 9.38.51 9.38.51s7.51 0 9.38-.51a3.02 3.02 0 002.12-2.14A31.5 31.5 0 0024 12a31.5 31.5 0 00-.5-5.81zM9.55 15.5V8.5l6.23 3.5-6.23 3.5z"/></svg>
+          </a>
+          <a href="mailto:ruachruachmedia.in@gmail.com" aria-label="Email">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <div class="floating-buttons">
+    <button class="scroll-top" id="scrollTop" aria-label="Scroll to top" title="Scroll to top">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
+    </button>
+    <a class="whatsapp-float" href="https://wa.me/919642557796" target="_blank" rel="noopener" aria-label="Contact on WhatsApp" title="Contact on WhatsApp">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 14.3c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.2-.7.9-.9 1.1-.2.2-.3.3-.6.1-.3-.1-1.2-.5-2.3-1.6-.9-.8-1.5-1.8-1.6-2.1-.1-.3 0-.4.1-.5.1-.1.3-.3.4-.4.1-.1.2-.2.3-.4.1-.2 0-.3 0-.4 0-.1-.7-1.7-1-2.4-.3-.7-.6-.5-.8-.5-.2 0-.4 0-.6.1-.2.1-1 .4-1.5.7-.5.4-1 .8-1.2 1.2-.2.4-.4 1-.2 1.9.2.9.6 1.8 1.1 2.6.5.7 1.3 1.6 2.2 2.3 1.2 1 2.4 1.5 3.1 1.7.7.2 1.2.2 1.6.1.4-.1 1-.4 1.5-.9.4-.4.7-.9.8-1.2.1-.3.1-.6 0-.7-.1-.2-.3-.3-.6-.4zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.2-1.2C8.5 21.4 10.2 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+    </a>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+      document.querySelectorAll('section, .about-grid, .why-card, .course-card').forEach(function (el) {
+        el.classList.add('reveal');
+        observer.observe(el);
+      });
+
+      const scrollTop = document.getElementById('scrollTop');
+      window.addEventListener('scroll', function () {
+        if (window.scrollY > 500) {
+          scrollTop.classList.add('visible');
+        } else {
+          scrollTop.classList.remove('visible');
+        }
+      });
+
+      scrollTop.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      document.querySelectorAll('.faq-question').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          const item = btn.closest('.faq-item');
+          const isOpen = item.classList.contains('open');
+
+          document.querySelectorAll('.faq-item').forEach(function (faq) {
+            faq.classList.remove('open');
+            faq.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+          });
+
+          if (!isOpen) {
+            item.classList.add('open');
+            btn.setAttribute('aria-expanded', 'true');
+          }
+        });
+      });
+
+      (function () {
+        const batchStart = new Date('2026-09-21T00:00:00');
+        const closeDate = new Date(batchStart);
+        closeDate.setDate(closeDate.getDate() - 1);
+        const now = new Date();
+        const statusEl = document.getElementById('batchStatus');
+        const card = document.querySelector('.batch-card');
+        const closedNote = document.querySelector('.batch-closed-note');
+        if (!statusEl) return;
+
+        if (now >= closeDate) {
+          statusEl.textContent = 'Admissions Closed';
+          statusEl.classList.remove('open');
+          statusEl.classList.add('closed');
+          if (card) card.classList.add('batch-full');
+          if (closedNote) closedNote.style.display = 'block';
+        } else {
+          statusEl.textContent = 'Admissions Open';
+          statusEl.classList.add('open');
+          statusEl.classList.remove('closed');
+        }
+      })();
+    });
+  </script>
+
+</body>
+</html>
 
