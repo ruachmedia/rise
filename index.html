@@ -280,7 +280,7 @@
     @media (max-width: 760px) {
       .hero {
         background-position: 75% center;
-        background-attachment: fixed;
+        background-attachment: scroll;
         background-size: cover;
       }
 
@@ -2518,8 +2518,9 @@
       const hero = document.querySelector('.hero');
       if (!hero) return;
       const w = window.innerWidth;
+      const fallbackMobile = 'https://ruachmedia.github.io/rise/Mobilehero.png';
       let url = '';
-      if (w <= 760 && hero.dataset.heroMobile) url = hero.dataset.heroMobile;
+      if (w <= 760) url = hero.dataset.heroMobile || fallbackMobile;
       else if (w <= 1100 && hero.dataset.heroTablet) url = hero.dataset.heroTablet;
       else if (hero.dataset.heroDesktop) url = hero.dataset.heroDesktop;
       if (url) hero.style.backgroundImage = 'url(' + encodeURI(url) + ')';
